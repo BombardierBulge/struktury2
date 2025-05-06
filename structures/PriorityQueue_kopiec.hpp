@@ -1,11 +1,12 @@
-#pragma once
+#ifndef PRIORITY_QUEUE_KOPIEC_HPP
+#define PRIORITY_QUEUE_KOPIEC_HPP
+
 #include <vector>
-#include <string>
 #include <stdexcept>
 
-// Szablon klasy kolejki priorytetowej 
+// Szablon klasy kopca priorytetowego
 template<typename T>
-class PriorityQueue {
+class PriorityQueueKopiec {
 private:
     std::vector<std::pair<int, T>> heap;
 
@@ -20,3 +21,6 @@ public:
     int return_size() const;
     bool empty() const;
 };
+
+#include "PriorityQueue_kopiec.tpp"
+#endif

@@ -1,9 +1,8 @@
-#pragma once
-#include "PriorityQueue_kopiec.hpp"
 
+#include "PriorityQueue_kopiec.hpp"
 // Naprawa kopca od dołu
 template<typename T>
-void PriorityQueue<T>::heapify_up(int index) {
+void PriorityQueueKopiec<T>::heapify_up(int index) {
     while (index > 0) {
         int parent = (index - 1) / 2;
         if (heap[index].first > heap[parent].first) {
@@ -15,7 +14,7 @@ void PriorityQueue<T>::heapify_up(int index) {
 
 // Naprawa kopca od góry
 template<typename T>
-void PriorityQueue<T>::heapify_down(int index) {
+void PriorityQueueKopiec<T>::heapify_down(int index) {
     int size = heap.size();
     while (2 * index + 1 < size) {
         int left = 2 * index + 1;
@@ -36,15 +35,15 @@ void PriorityQueue<T>::heapify_down(int index) {
 
 // insert(e, p)
 template<typename T>
-void PriorityQueue<T>::insert(const T& e, int p) {
+void PriorityQueueKopiec<T>::insert(const T& e, int p) {
     heap.push_back({p, e});
     heapify_up(heap.size() - 1);
 }
 
 // extract-max()
 template<typename T>
-T PriorityQueue<T>::extract_max() {
-    if (heap.empty()) throw std::runtime_error("Kolejka jest pusta.");
+T PriorityQueueKopiec<T>::extract_max() {
+    if (heap.empty()) throw std::runtime_error("Kopiec jest pusty.");
     T maxElem = heap[0].second;
     heap[0] = heap.back();
     heap.pop_back();
@@ -54,15 +53,15 @@ T PriorityQueue<T>::extract_max() {
 
 // peek()
 template<typename T>
-T PriorityQueue<T>::peek() const {
-    if (heap.empty()) throw std::runtime_error("Kolejka jest pusta.");
+T PriorityQueueKopiec<T>::peek() const {
+    if (heap.empty()) throw std::runtime_error("Kopiec jest pusty.");
     return heap[0].second;
 }
 
 // modify-key(e, p)
 template<typename T>
-void PriorityQueue<T>::modify_key(const T& e, int new_p) {
-    for (int i = 0; i < heap.size(); ++i) {
+void PriorityQueueKopiec<T>::modify_key(const T& e, int new_p) {
+    for (std::size_t i = 0; i < heap.size(); ++i) {
         if (heap[i].second == e) {
             int old_p = heap[i].first;
             heap[i].first = new_p;
@@ -78,12 +77,12 @@ void PriorityQueue<T>::modify_key(const T& e, int new_p) {
 
 // return-size()
 template<typename T>
-int PriorityQueue<T>::return_size() const {
+int PriorityQueueKopiec<T>::return_size() const {
     return heap.size();
 }
 
 // empty()
 template<typename T>
-bool PriorityQueue<T>::empty() const {
+bool PriorityQueueKopiec<T>::empty() const {
     return heap.empty();
 }
