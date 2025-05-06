@@ -4,10 +4,36 @@ template <typename T>
 PriorityQueue<T>::PriorityQueue() : head(nullptr), size(0) {}
 
 template <typename T>
+PriorityQueue<T>::PriorityQueue(const PriorityQueue& other) : head(nullptr), size(0) {
+    Node* current = other.head;
+    while (current) {
+        insert(current->data, current->priority);
+        current = current->next;
+    }
+}
+
+template <typename T>
 PriorityQueue<T>::~PriorityQueue() {
     while (head) {
         extractMax();
     }
+}
+
+template <typename T>
+PriorityQueue<T>& PriorityQueue<T>::operator=(const PriorityQueue& other) {
+    if (this == &other) return *this;
+
+    while (head) {
+        extractMax();
+    }
+
+    Node* current = other.head;
+    while (current) {
+        insert(current->data, current->priority);
+        current = current->next;
+    }
+
+    return *this;
 }
 
 template <typename T>

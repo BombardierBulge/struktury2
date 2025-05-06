@@ -23,6 +23,9 @@ public:
     T findMax() const;
     void modifyKey(const T& element, int newPriority);
     int getSize() const;
+
+    PriorityQueue(const PriorityQueue& other);
+    PriorityQueue& operator=(const PriorityQueue& other);
 };
 
 #include "priority_queue.tpp"
