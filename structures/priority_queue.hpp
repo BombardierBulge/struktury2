@@ -4,28 +4,28 @@
 template <typename T>
 class PriorityQueue {
 private:
-    struct Node {
-        T data;
-        int priority;
-        Node* next;
-        Node(const T& d, int p) : data(d), priority(p), next(nullptr) {}
+    struct Node {//struktura wezla
+        T data;//dane typu T template
+        int priority;//priorytet
+        Node* next; //wskaźnik na następny node
+        Node(const T& d, int p) : data(d), priority(p), next(nullptr) {}//konstruktor
     };
     
     Node* head;
     int size;
 
 public:
-    PriorityQueue();
-    ~PriorityQueue();
+    PriorityQueue();//konstruktor
+    ~PriorityQueue();//destruktor
     
-    void insert(const T& element, int priority);
-    T extractMax();
-    T findMax() const;
-    void modifyKey(const T& element, int newPriority);
-    int getSize() const;
+    void insert(const T& element, int priority);//wstawia element do kolejki z priorytetem
+    T extractMax();	//usuwa element o najwyzszym priorytecie i go zwraca
+    T findMax() const;	//zwraca element o najwyzszym priorytecie bez usuwania go z kolejki
+    void modifyKey(const T& element, int newPriority);	//zmienia priorytet elementu w kolejce o wybranej wartości
+    int getSize() const;	//zwraca rozmiar kolejki
 
-    PriorityQueue(const PriorityQueue& other);
-    PriorityQueue& operator=(const PriorityQueue& other);
+    PriorityQueue(const PriorityQueue& other);//konstruktor kopiujący
+    PriorityQueue& operator=(const PriorityQueue& other);//operator przypisania
 };
 
 #include "priority_queue.tpp"
