@@ -7,10 +7,10 @@
 #include "timer/timer.hpp"
 
 void saveResults(const std::string& structureName, const std::string& methodName, int size, double time) {
-    std::string directoryPath = "./results/" + structureName + "/" + methodName;
+    std::string directoryPath = "./results/" + structureName;
     std::filesystem::create_directories(directoryPath); 
 
-    std::string filePath = directoryPath + "/" + std::to_string(size) + ".txt";
+    std::string filePath = directoryPath + "/" + methodName + ".txt";
     std::ofstream outFile(filePath, std::ios::app); 
     if (outFile.is_open()) {
         outFile << "Rozmiar: " << size << ", Średni czas: " << time << " \xE6" << std::endl;
@@ -23,10 +23,19 @@ void saveResults(const std::string& structureName, const std::string& methodName
 int main() {
     int structureSizes[] = {5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000};
 
+    std::cout << "Wybierz strukturę danych do testowania:\n";
+    std::cout << "1. Lista wiązana jednokierunkowa\n";
+    std::cout << "2. Heap\n";
+    std::cout << "3. Obie\n";
+    std::cout << "Twój wybór: ";
+    int choice;
+    std::cin >> choice;
+
     for (int size : structureSizes) {
-        //generowanie lista wiazana
-        RandomStructures<int> randomQueue(size, StructureType::Queue);
-        randomQueue.generateRandomStructure();
+        if (choice == 1 || choice == 3) {
+            //generwanie listy wiązanej
+            RandomStructures<int> randomQueue(size, StructureType::Queue);
+            randomQueue.generateRandomStructure();
 
         const auto& queueCopies = randomQueue.getQueueCopies();
         if (!queueCopies.empty()) {
@@ -115,19 +124,19 @@ int main() {
 
                 timer.stop();
 
-                
-                if (successfulOperations > 0) {
-                    saveResults("queue", "modifyKey", size, timer.measurement_micro() / successfulOperations);
-                } else {
-                    
-                    saveResults("queue", "modifyKey", size, -1);
+                    if (successfulOperations > 0) {
+                        saveResults("queue", "modifyKey", size, timer.measurement_micro() / successfulOperations);
+                    } else {
+                        saveResults("queue", "modifyKey", size, -1);
+                    }
                 }
             }
         }
 
-        //generowanie kopca
-        RandomStructures<int> randomHeap(size, StructureType::Heap);
-        randomHeap.generateRandomStructure();
+        if (choice == 2 || choice == 3) {
+            // Testowanie Heap
+            RandomStructures<int> randomHeap(size, StructureType::Heap);
+            randomHeap.generateRandomStructure();
 
         const auto& heapCopies = randomHeap.getHeapCopies();
         if (!heapCopies.empty()) {
@@ -214,10 +223,11 @@ int main() {
 
                 timer.stop();
 
-                if (successfulOperations > 0) {
-                    saveResults("heap", "modify_key", size, timer.measurement_micro() / successfulOperations);
-                } else {
-                    saveResults("heap", "modify_key", size, -1);
+                    if (successfulOperations > 0) {
+                        saveResults("heap", "modify_key", size, timer.measurement_micro() / successfulOperations);
+                    } else {
+                        saveResults("heap", "modify_key", size, -1);
+                    }
                 }
             }
         }
